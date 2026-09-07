@@ -2,12 +2,11 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.entity.OrderEntity;
 import com.example.orderservice.service.OrderService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/orders")
@@ -32,13 +31,15 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderEntity> getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id)
+        return orderService
+                .getOrderById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<OrderEntity> updateOrderStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+    public ResponseEntity<OrderEntity> updateOrderStatus(
+            @PathVariable Long id, @RequestBody Map<String, String> request) {
         String status = request.get("status");
         return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
     }

@@ -2,10 +2,9 @@ package com.example.orderservice.service;
 
 import com.example.orderservice.entity.OrderEntity;
 import com.example.orderservice.repository.OrderRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
@@ -32,8 +31,10 @@ public class OrderService {
     }
 
     public OrderEntity updateOrderStatus(Long id, String status) {
-        OrderEntity order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+        OrderEntity order =
+                orderRepository
+                        .findById(id)
+                        .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
         order.setStatus(status);
         return orderRepository.save(order);
     }
